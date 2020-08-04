@@ -70,14 +70,14 @@ function htmlCart(cart, url) {
   return html;
 }
 function removeItem(obj) {
-  var product_id = obj.attr('data-id');
+  var id= obj.attr('data-id');
   var url = obj.attr('data-url');
   var data = {
-    id: product_id
+    id: id
   };
   $.ajax({
     url: url,
-    type: 'POST',
+    type: 'GET',
     data: data,
     dataType: 'JSON',
     success: function(data) {
@@ -101,6 +101,7 @@ function removeItem(obj) {
     }
   });
 }
+
 function minus(id) {
   var result = $('#qtyItem' + id);
   var qty = parseInt(result.val());
@@ -144,7 +145,7 @@ function minus(id) {
       error: function(data) {
         var errors = data.responseJSON;
         Swal.fire({
-          title: 'Thất bại',
+          title: 'Thất baị',
           text: errors.msg,
           type: 'error'
         })
@@ -227,10 +228,11 @@ function post(path, params, method='post') {
   document.body.appendChild(form);
   form.submit();
 }
-$(document).ready(function(){
-  $('.site-cart .total-price .btn-action button').click(function() {
-    var url = $(this).attr('data-url');
-    var token = $('meta[name="csrf-token"]').attr('content');
-    post(url, {type: 'buy_cart', _token: token});
-  });
-});
+
+// $(document).ready(function(){
+//   $('.site-cart .total-price .btn-action button').click(function() {
+//     var url = $(this).attr('data-url');
+//     var token = $('meta[name="csrf-token"]').attr('content');
+//     post(url, {type: 'buy_cart', _token: token});
+//   });
+// });

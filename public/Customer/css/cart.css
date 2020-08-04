@@ -2,6 +2,11 @@
   padding: 15px;
   border-bottom: 1px solid #eee;
 }
+.slide-advertise-inner {
+    background-repeat: no-repeat;
+    background-size: cover;
+    padding-top: 21.25% !important;
+}
 .site-cart .section-header .section-title {
   padding: 0;
   margin: 0;
@@ -13,6 +18,7 @@
   font-size: 14px;
   font-weight: 400;
 }
+
 .site-cart .section-content {
   margin-top: 20px;
 }
@@ -299,4 +305,5 @@
   .site-cart .section-cart .info-product .name {
     margin-right: 0;
   }
+
 }

@@ -1,7 +1,7 @@
 .slide-advertise-inner {
   background-repeat: no-repeat;
   background-size: cover;
-  padding-top: 21.25%;
+  padding-top: 21.25% !important;
 }
 #slide-advertise.owl-carousel .owl-item.active {
   -webkit-animation-name: zoomIn;
@@ -147,10 +147,17 @@
   color: #f30;
   font-weight: 600;
 }
+.section-product .section-infomation .price-product .origin-price {
+  font-size: 22px;
+  color: #000;
+  font-weight: 600;
+}
+
 .section-product .section-infomation .price-product .sale-price span {
   font-size: 16px;
   vertical-align: top;
 }
+
 .section-product .section-infomation .price-product .old-price,
 .section-product .section-infomation .price-product .save-price {
   display: inline-block;
@@ -661,13 +668,13 @@
   font-size: 15px;
   color: #000;
 }
-.section-product .form-payment {
+.section-product .payment {
   margin-top: 30px;
 }
 /*.section-product .form-payment form {
   display: flex;
 }*/
-.section-product .form-payment .form-center {
+.section-product .form-payment .form-center  {
   display: flex;
   align-items: center;
 }
@@ -679,6 +686,9 @@
   padding: 0 8px;
   height: 44px;
   width: 30px;
+}
+.section-product .form-payment  a {
+text-decoration: none
 }
 .section-product .form-payment .form-center input {
   border: none;

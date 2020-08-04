@@ -1,4 +1,18 @@
 @extends('Customer/master')
+@section('header')
+<style>
+    .slide-advertise-inner {
+      background-repeat: no-repeat;
+      background-size: cover;
+      padding-top: 21.25% !important;
+    }
+    #slide-advertise.owl-carousel .owl-item.active {
+      -webkit-animation-name: zoomIn;
+      animation-name: zoomIn;
+      -webkit-animation-duration: .6s;
+      animation-duration: .6s;
+    }
+  </style>
 @section('main')
 
 <div class="container">
@@ -29,14 +43,24 @@
           <h2 class="section-title">Tìm Kiếm Và Sắp Xếp</h2>
         </div>
         <div class="section-content">
-          <form action="https://phonestorewebsite.000webhostapp.com/products" method="GET" accept-charset="utf-8">
+         <!--  <form action="{{route('pro_search')}}" method="GET" accept-charset="utf-8">
+            @csrf -->
             <div class="row">
               <div class="col-md-10">
                 <div class="row">
+                 
                   <div class="col-md-3 col-sm-6 col-xs-6">
-                    <input type="text" name="name" placeholder="Tìm kiếm..." value="">
+                    <form action="{{route('pro_search')}}" method="PUT">
+                      @csrf
+                    <input type="text" name="search" placeholder="Tìm kiếm..." value="">
+
+                     </form>
                   </div>
+              
+                  <form action="" method="GET">
+                    @csrf
                   <div class="col-md-3 col-sm-6 col-xs-6">
+
                     <select name='os'>
                       <option value='' selected>
                         Hệ Điều Hành
@@ -76,8 +100,10 @@
                       </option>
                     </select>
                   </div>
+                </form>
                 </div>
               </div>
+
               <div class="col-md-2">
                 <button type="submit" class="btn btn-default">Lọc Sản Phẩm</button>
               </div>
@@ -87,72 +113,46 @@
       </section>
 
       <section class="section-products">
+        
         <div class="section-header">
+            
           <div class="section-header-left">
-            <h2 class="section-title">ĐIỆN THOẠI</h2>
+            <h2 class="section-title">
+              Tên
+            </h2>
           </div>
           <div class="section-header-right">
             <ul>
-              <li><a href="producer/1.html" title="Apple">Apple</a></li>
-              <li><a href="producer/2.html" title="Samsung">Samsung</a></li>
-              <li><a href="producer/3.html" title="Sony">Sony</a></li>
-              <li><a href="producer/4.html" title="OPPO">OPPO</a></li>
-              <li><a href="producer/5.html" title="Huawei">Huawei</a></li>
-              <li><a href="producer/6.html" title="Xiaomi">Xiaomi</a></li>
+              @foreach($cate as $value)
+              <li><a href="{{route('pro_cate',['slug'=>$value->slug])}}" title="Apple">{{$value->name}}</a></li>
+              @endforeach
             </ul>
           </div>
         </div>
         <div class="section-content">
           <div class="row">
+            
+           
+          @foreach($product as $row)
             <div class="col-md-2 col-md-20">
               <div class="item-product">
-                <a href="product/14.html" title="IPhone 11 Pro Max">
+                <a href="{{route('pro_detail',['slug'=>$row->slug])}}" title="{{$row->category->name}}">
                   <div class="row">
                     <div class="col-md-12 col-sm-12 col-xs-12">
-                      <div class="image-product" style="background-image: url('storage/images/products/1587557416_C5sYA7pn_iphone-11-pro-den-didongviet_1_2.jpg');padding-top: 100%;">
+                      <div class="image-product" style="background-image: url('{{$row->image}}');padding-top: 100%;">
                         
                       </div>
                       <div class="content-product">
-                        <h3 class="title">IPhone 11 Pro Max</h3>
-                        <div class="start-vote">
-                          <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i><i class="far fa-star"></i>
-                        </div>
-                        <div class="price">
-                          <strong>33.490.000₫</strong>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="col-md-12 col-sm-12 col-xs-12 animate">
-                      <div class="product-details">
-                        <p><strong><i class="fas fa-tv"></i> Màn Hình: </strong>OLED, 6.5&quot;, Super Retina XDR</p>
-                        <p><strong><i class="fas fa-camera-retro"></i> Camera Trước: </strong>12 MP</p>
-                        <p><strong><i class="fas fa-camera-retro"></i> Camera sau: </strong>3 camera 12 MP</p>
-                        <p><strong><i class="fas fa-microchip"></i> CPU: </strong>Apple A13 Bionic 6 nhân</p>
-                        <p><strong><i class="fas fa-microchip"></i>GPU: </strong>Apple GPU 4 nhân</p>
-                        <p><strong><i class="fas fa-hdd"></i> RAM: </strong>4GB</p>
-                        <p><strong><i class="fas fa-hdd"></i> Bộ Nhớ Trong: </strong>64GB</p>
-                        <p><strong><i class="fas fa-battery-full"></i> Dung Lượng PIN: </strong>3969 mAh, có sạc nhanh</p>
-                      </div>
-                    </div>
-                  </div>
-                </a>
-              </div>
-            </div>
-            <div class="col-md-2 col-md-20">
-              <div class="item-product">
-                <a href="product/13.html" title="Samsung Galaxy Note 10">
-                  <div class="row">
-                    <div class="col-md-12 col-sm-12 col-xs-12">
-                      <div class="image-product" style="background-image: url('storage/images/products/1577117658_BkLuXOv8_samsung-galaxy-note-10-(6.html).jpg');padding-top: 100%;">
-                        
-                      </div>
-                      <div class="content-product">
-                        <h3 class="title">Samsung Galaxy Note 10</h3>
+                        <h3 class="title">{{$row->name}}</h3>
                         <div class="start-vote">
                           <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
                         </div>
                         <div class="price">
-                          <strong>22.490.000₫</strong>
+                          @if($row->sale_price >0)
+                          <strong>{{number_format($row->sale_price,0,'','.')}}</strong>
+                          @else
+                          <strong>{{number_format($row->price,0,'','0')}}</strong>
+                          @endif
                         </div>
                       </div>
                     </div>
@@ -172,414 +172,9 @@
                 </a>
               </div>
             </div>
-            <div class="col-md-2 col-md-20">
-              <div class="item-product">
-                <a href="product/12.html" title="IPhone 11 Pro 128GB">
-                  <div class="row">
-                    <div class="col-md-12 col-sm-12 col-xs-12">
-                      <div class="image-product" style="background-image: url('storage/images/products/1577117100_afIgGGKs_iphone-11-pro.jpg');padding-top: 100%;">
-                        
-                      </div>
-                      <div class="content-product">
-                        <h3 class="title">IPhone 11 Pro 128GB</h3>
-                        <div class="start-vote">
-                          <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
-                        </div>
-                        <div class="price">
-                          <strong>31.990.000₫</strong>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="col-md-12 col-sm-12 col-xs-12 animate">
-                      <div class="product-details">
-                        <p><strong><i class="fas fa-tv"></i> Màn Hình: </strong>OLED, 5.8&quot;, Super Retina XDR</p>
-                        <p><strong><i class="fas fa-camera-retro"></i> Camera Trước: </strong>12 MP</p>
-                        <p><strong><i class="fas fa-camera-retro"></i> Camera sau: </strong>3 camera 12 MP</p>
-                        <p><strong><i class="fas fa-microchip"></i> CPU: </strong>Apple A13 Bionic 6 nhân</p>
-                        <p><strong><i class="fas fa-microchip"></i>GPU: </strong>Apple GPU 4 nhân</p>
-                        <p><strong><i class="fas fa-hdd"></i> RAM: </strong>4GB</p>
-                        <p><strong><i class="fas fa-hdd"></i> Bộ Nhớ Trong: </strong>128GB</p>
-                        <p><strong><i class="fas fa-battery-full"></i> Dung Lượng PIN: </strong>3046 mAh, có sạc nhanh</p>
-                      </div>
-                    </div>
-                  </div>
-                </a>
-              </div>
-            </div>
-            <div class="col-md-2 col-md-20">
-              <div class="item-product">
-                <a href="product/11.html" title="Samsung Galaxy S10 Plus">
-                  <div class="row">
-                    <div class="col-md-12 col-sm-12 col-xs-12">
-                      <div class="image-product" style="background-image: url('storage/images/products/1577116672_J3Q4MhxM_SamSungGalaxyS10.png');padding-top: 100%;">
-                        
-                      </div>
-                      <div class="content-product">
-                        <h3 class="title">Samsung Galaxy S10 Plus</h3>
-                        <div class="start-vote">
-                          <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
-                        </div>
-                        <div class="price">
-                          <strong>22.990.000₫</strong>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="col-md-12 col-sm-12 col-xs-12 animate">
-                      <div class="product-details">
-                        <p><strong><i class="fas fa-tv"></i> Màn Hình: </strong>Dynamic AMOLED, 6.4&quot;, Quad HD+ (2K+)</p>
-                        <p><strong><i class="fas fa-camera-retro"></i> Camera Trước: </strong>Chính 10 MP &amp; Phụ 8 MP</p>
-                        <p><strong><i class="fas fa-camera-retro"></i> Camera sau: </strong>Chính 12 MP &amp; Phụ 12 MP, 16 MP</p>
-                        <p><strong><i class="fas fa-microchip"></i> CPU: </strong>Exynos 9820 8 nhân</p>
-                        <p><strong><i class="fas fa-microchip"></i>GPU: </strong>Mali-G76 MP12</p>
-                        <p><strong><i class="fas fa-hdd"></i> RAM: </strong>8GB</p>
-                        <p><strong><i class="fas fa-hdd"></i> Bộ Nhớ Trong: </strong>128GB</p>
-                        <p><strong><i class="fas fa-battery-full"></i> Dung Lượng PIN: </strong>4100 mAh, có sạc nhanh</p>
-                      </div>
-                    </div>
-                  </div>
-                </a>
-              </div>
-            </div>
-            <div class="col-md-2 col-md-20">
-              <div class="item-product">
-                <a href="product/10.html" title="IPhone 11 64GB">
-                  <div class="row">
-                    <div class="col-md-12 col-sm-12 col-xs-12">
-                      <div class="image-product" style="background-image: url('storage/images/products/1577116181_gaGwh0e6_iphone-11.jpg');padding-top: 100%;">
-                        
-                      </div>
-                      <div class="content-product">
-                        <h3 class="title">IPhone 11 64GB</h3>
-                        <div class="start-vote">
-                          <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
-                        </div>
-                        <div class="price">
-                          <strong>21.990.000₫</strong>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="col-md-12 col-sm-12 col-xs-12 animate">
-                      <div class="product-details">
-                        <p><strong><i class="fas fa-tv"></i> Màn Hình: </strong>IPS LCD, 6.1&quot;, Liquid Retina</p>
-                        <p><strong><i class="fas fa-camera-retro"></i> Camera Trước: </strong>12 MP</p>
-                        <p><strong><i class="fas fa-camera-retro"></i> Camera sau: </strong>Chính 12 MP &amp; Phụ 12 MP</p>
-                        <p><strong><i class="fas fa-microchip"></i> CPU: </strong>Apple A13 Bionic 6 nhân</p>
-                        <p><strong><i class="fas fa-microchip"></i>GPU: </strong>Apple GPU 4 nhân</p>
-                        <p><strong><i class="fas fa-hdd"></i> RAM: </strong>4GB</p>
-                        <p><strong><i class="fas fa-hdd"></i> Bộ Nhớ Trong: </strong>64GB</p>
-                        <p><strong><i class="fas fa-battery-full"></i> Dung Lượng PIN: </strong>3110 mAh, có sạc nhanh</p>
-                      </div>
-                    </div>
-                  </div>
-                </a>
-              </div>
-            </div>
-            <div class="col-md-2 col-md-20">
-              <div class="item-product">
-                <a href="product/9.html" title="Samsung Galaxy S10e">
-                  <div class="row">
-                    <div class="col-md-12 col-sm-12 col-xs-12">
-                      <div class="image-product" style="background-image: url('storage/images/products/1577115826_cWYgOmmj_ss-galaxy-s10e-den-1.png');padding-top: 100%;">
-                        
-                      </div>
-                      <div class="content-product">
-                        <h3 class="title">Samsung Galaxy S10e</h3>
-                        <div class="start-vote">
-                          <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
-                        </div>
-                        <div class="price">
-                          <strong>16.490.000₫</strong>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="col-md-12 col-sm-12 col-xs-12 animate">
-                      <div class="product-details">
-                        <p><strong><i class="fas fa-tv"></i> Màn Hình: </strong>Dynamic AMOLED, 5.8&quot;, Full HD+</p>
-                        <p><strong><i class="fas fa-camera-retro"></i> Camera Trước: </strong>10 MP</p>
-                        <p><strong><i class="fas fa-camera-retro"></i> Camera sau: </strong>12 MP và 16 MP (2 camera)</p>
-                        <p><strong><i class="fas fa-microchip"></i> CPU: </strong>Exynos 9820 8 nhân 64-bit</p>
-                        <p><strong><i class="fas fa-microchip"></i>GPU: </strong>Mali-G76 MP12</p>
-                        <p><strong><i class="fas fa-hdd"></i> RAM: </strong>6GB</p>
-                        <p><strong><i class="fas fa-hdd"></i> Bộ Nhớ Trong: </strong>128GB</p>
-                        <p><strong><i class="fas fa-battery-full"></i> Dung Lượng PIN: </strong>3100 mAh, có sạc nhanh</p>
-                      </div>
-                    </div>
-                  </div>
-                </a>
-              </div>
-            </div>
-            <div class="col-md-2 col-md-20">
-              <div class="item-product">
-                <a href="product/8.html" title="IPhone 8 Plus">
-                  <div class="row">
-                    <div class="col-md-12 col-sm-12 col-xs-12">
-                      <div class="image-product" style="background-image: url('storage/images/products/1577114645_yn58HuVl_iphone-8-plus-thumb.jpg');padding-top: 100%;">
-                        
-                      </div>
-                      <div class="content-product">
-                        <h3 class="title">IPhone 8 Plus</h3>
-                        <div class="start-vote">
-                          <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
-                        </div>
-                        <div class="price">
-                          <strong>15.990.000₫</strong>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="col-md-12 col-sm-12 col-xs-12 animate">
-                      <div class="product-details">
-                        <p><strong><i class="fas fa-tv"></i> Màn Hình: </strong>LED-backlit IPS LCD, 5.5&quot;, Retina HD</p>
-                        <p><strong><i class="fas fa-camera-retro"></i> Camera Trước: </strong>7 MP</p>
-                        <p><strong><i class="fas fa-camera-retro"></i> Camera sau: </strong>Chính 12 MP &amp; Phụ 12 MP</p>
-                        <p><strong><i class="fas fa-microchip"></i> CPU: </strong>Apple A11 Bionic 6 nhân</p>
-                        <p><strong><i class="fas fa-microchip"></i>GPU: </strong>Apple GPU 3 nhân</p>
-                        <p><strong><i class="fas fa-hdd"></i> RAM: </strong>3GB</p>
-                        <p><strong><i class="fas fa-hdd"></i> Bộ Nhớ Trong: </strong>64GB</p>
-                        <p><strong><i class="fas fa-battery-full"></i> Dung Lượng PIN: </strong>2691 mAh, có sạc nhanh</p>
-                      </div>
-                    </div>
-                  </div>
-                </a>
-              </div>
-            </div>
-            <div class="col-md-2 col-md-20">
-              <div class="item-product">
-                <a href="product/7.html" title="Samsung Galaxy Note 9">
-                  <div class="row">
-                    <div class="col-md-12 col-sm-12 col-xs-12">
-                      <div class="image-product" style="background-image: url('storage/images/products/1577114295_g226AHaQ_samsung-galaxy-note-9.jpg');padding-top: 100%;">
-                        
-                      </div>
-                      <div class="content-product">
-                        <h3 class="title">Samsung Galaxy Note 9</h3>
-                        <div class="start-vote">
-                          <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
-                        </div>
-                        <div class="price">
-                          <strong>22.990.000₫</strong>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="col-md-12 col-sm-12 col-xs-12 animate">
-                      <div class="product-details">
-                        <p><strong><i class="fas fa-tv"></i> Màn Hình: </strong>Super AMOLED, 6.4&quot;, Quad HD+ (2K+)</p>
-                        <p><strong><i class="fas fa-camera-retro"></i> Camera Trước: </strong>8 MP</p>
-                        <p><strong><i class="fas fa-camera-retro"></i> Camera sau: </strong>Chính 12 MP &amp; Phụ 12 MP</p>
-                        <p><strong><i class="fas fa-microchip"></i> CPU: </strong>Exynos 9810 8 nhân</p>
-                        <p><strong><i class="fas fa-microchip"></i>GPU: </strong>Mali-G72 MP18</p>
-                        <p><strong><i class="fas fa-hdd"></i> RAM: </strong>6GB</p>
-                        <p><strong><i class="fas fa-hdd"></i> Bộ Nhớ Trong: </strong>128GB</p>
-                        <p><strong><i class="fas fa-battery-full"></i> Dung Lượng PIN: </strong>4000 mAh, có sạc nhanh</p>
-                      </div>
-                    </div>
-                  </div>
-                </a>
-              </div>
-            </div>
-            <div class="col-md-2 col-md-20">
-              <div class="item-product">
-                <a href="product/6.html" title="Samsung Galaxy A7">
-                  <div class="row">
-                    <div class="col-md-12 col-sm-12 col-xs-12">
-                      <div class="image-product" style="background-image: url('storage/images/products/1577113865_lzNtvCX9_samsung-galaxy-a70.jpg');padding-top: 100%;">
-                        
-                      </div>
-                      <div class="content-product">
-                        <h3 class="title">Samsung Galaxy A7</h3>
-                        <div class="start-vote">
-                          <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
-                        </div>
-                        <div class="price">
-                          <strong>9.290.000₫</strong>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="col-md-12 col-sm-12 col-xs-12 animate">
-                      <div class="product-details">
-                        <p><strong><i class="fas fa-tv"></i> Màn Hình: </strong>Super AMOLED, 6.7&quot;, Full HD+</p>
-                        <p><strong><i class="fas fa-camera-retro"></i> Camera Trước: </strong>32 MP</p>
-                        <p><strong><i class="fas fa-camera-retro"></i> Camera sau: </strong>Chính 32 MP &amp; Phụ 8 MP, 5 MP</p>
-                        <p><strong><i class="fas fa-microchip"></i> CPU: </strong>Snapdragon 675 8 nhân</p>
-                        <p><strong><i class="fas fa-microchip"></i>GPU: </strong>Adreno 612</p>
-                        <p><strong><i class="fas fa-hdd"></i> RAM: </strong>6GB</p>
-                        <p><strong><i class="fas fa-hdd"></i> Bộ Nhớ Trong: </strong>128GB</p>
-                        <p><strong><i class="fas fa-battery-full"></i> Dung Lượng PIN: </strong>4500 mAh, có sạc nhanh</p>
-                      </div>
-                    </div>
-                  </div>
-                </a>
-              </div>
-            </div>
-            <div class="col-md-2 col-md-20">
-              <div class="item-product">
-                <a href="product/5.html" title="OPPO F11 128GB">
-                  <div class="row">
-                    <div class="col-md-12 col-sm-12 col-xs-12">
-                      <div class="image-product" style="background-image: url('storage/images/products/1577113344_Qha0jOsk_oppo-f11-pro-128gb.jpg');padding-top: 100%;">
-                        
-                      </div>
-                      <div class="content-product">
-                        <h3 class="title">OPPO F11 128GB</h3>
-                        <div class="start-vote">
-                          <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
-                        </div>
-                        <div class="price">
-                          <strong>8.490.000₫</strong>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="col-md-12 col-sm-12 col-xs-12 animate">
-                      <div class="product-details">
-                        <p><strong><i class="fas fa-tv"></i> Màn Hình: </strong>LTPS LCD, 6.5&quot;, Full HD+</p>
-                        <p><strong><i class="fas fa-camera-retro"></i> Camera Trước: </strong>16 MP</p>
-                        <p><strong><i class="fas fa-camera-retro"></i> Camera sau: </strong>Chính 48 MP &amp; Phụ 5 MP</p>
-                        <p><strong><i class="fas fa-microchip"></i> CPU: </strong>MediaTek Helio P70 8 nhân</p>
-                        <p><strong><i class="fas fa-microchip"></i>GPU: </strong>Mali-G72 MP3</p>
-                        <p><strong><i class="fas fa-hdd"></i> RAM: </strong>6GB</p>
-                        <p><strong><i class="fas fa-hdd"></i> Bộ Nhớ Trong: </strong>128GB</p>
-                        <p><strong><i class="fas fa-battery-full"></i> Dung Lượng PIN: </strong>4000 mAh, có sạc nhanh</p>
-                      </div>
-                    </div>
-                  </div>
-                </a>
-              </div>
-            </div>
-            <div class="col-md-2 col-md-20">
-              <div class="item-product">
-                <a href="product/4.html" title="OPPO F9 64GB">
-                  <div class="row">
-                    <div class="col-md-12 col-sm-12 col-xs-12">
-                      <div class="image-product" style="background-image: url('storage/images/products/1577112521_QjGuZUNM_f9.jpg');padding-top: 100%;">
-                        
-                      </div>
-                      <div class="content-product">
-                        <h3 class="title">OPPO F9 64GB</h3>
-                        <div class="start-vote">
-                          <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
-                        </div>
-                        <div class="price">
-                          <strong>6.990.000₫</strong>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="col-md-12 col-sm-12 col-xs-12 animate">
-                      <div class="product-details">
-                        <p><strong><i class="fas fa-tv"></i> Màn Hình: </strong>LTPS LCD, 6.3&quot;, Full HD+</p>
-                        <p><strong><i class="fas fa-camera-retro"></i> Camera Trước: </strong>25 MP</p>
-                        <p><strong><i class="fas fa-camera-retro"></i> Camera sau: </strong>Chính 16 MP &amp; Phụ 2 MP</p>
-                        <p><strong><i class="fas fa-microchip"></i> CPU: </strong>MediaTek Helio P60 8 nhân</p>
-                        <p><strong><i class="fas fa-microchip"></i>GPU: </strong>Mali-G72 MP3</p>
-                        <p><strong><i class="fas fa-hdd"></i> RAM: </strong>4GB</p>
-                        <p><strong><i class="fas fa-hdd"></i> Bộ Nhớ Trong: </strong>64GB</p>
-                        <p><strong><i class="fas fa-battery-full"></i> Dung Lượng PIN: </strong>3500 mAh, có sạc nhanh</p>
-                      </div>
-                    </div>
-                  </div>
-                </a>
-              </div>
-            </div>
-            <div class="col-md-2 col-md-20">
-              <div class="item-product">
-                <a href="product/3.html" title="Huawei Y7 Pro">
-                  <div class="row">
-                    <div class="col-md-12 col-sm-12 col-xs-12">
-                      <div class="image-product" style="background-image: url('storage/images/products/1577111999_mxHhwOdA_huawei-y7-pro.png');padding-top: 100%;">
-                        
-                      </div>
-                      <div class="content-product">
-                        <h3 class="title">Huawei Y7 Pro</h3>
-                        <div class="start-vote">
-                          <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
-                        </div>
-                        <div class="price">
-                          <strong>3.990.000₫</strong>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="col-md-12 col-sm-12 col-xs-12 animate">
-                      <div class="product-details">
-                        <p><strong><i class="fas fa-tv"></i> Màn Hình: </strong>IPS LCD, 6.26&quot;, HD+</p>
-                        <p><strong><i class="fas fa-camera-retro"></i> Camera Trước: </strong>16 MP</p>
-                        <p><strong><i class="fas fa-camera-retro"></i> Camera sau: </strong>Chính 13 MP &amp; Phụ 2 MP</p>
-                        <p><strong><i class="fas fa-microchip"></i> CPU: </strong>Snapdragon 450 8 nhân</p>
-                        <p><strong><i class="fas fa-microchip"></i>GPU: </strong>Adreno 506</p>
-                        <p><strong><i class="fas fa-hdd"></i> RAM: </strong>3GB</p>
-                        <p><strong><i class="fas fa-hdd"></i> Bộ Nhớ Trong: </strong>32GB</p>
-                        <p><strong><i class="fas fa-battery-full"></i> Dung Lượng PIN: </strong>4000 mAh</p>
-                      </div>
-                    </div>
-                  </div>
-                </a>
-              </div>
-            </div>
-            <div class="col-md-2 col-md-20">
-              <div class="item-product">
-                <a href="product/2.html" title="Huawei Mate 20 Pro">
-                  <div class="row">
-                    <div class="col-md-12 col-sm-12 col-xs-12">
-                      <div class="image-product" style="background-image: url('storage/images/products/1577099109_pqNdZjdt_huawei-mate20-pro.jpg');padding-top: 100%;">
-                        
-                      </div>
-                      <div class="content-product">
-                        <h3 class="title">Huawei Mate 20 Pro</h3>
-                        <div class="start-vote">
-                          <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
-                        </div>
-                        <div class="price">
-                          <strong>21.990.000₫</strong>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="col-md-12 col-sm-12 col-xs-12 animate">
-                      <div class="product-details">
-                        <p><strong><i class="fas fa-tv"></i> Màn Hình: </strong>OLED, 6.39&quot;, Quad HD+ (2K+)</p>
-                        <p><strong><i class="fas fa-camera-retro"></i> Camera Trước: </strong>24 MP</p>
-                        <p><strong><i class="fas fa-camera-retro"></i> Camera sau: </strong>Chính 40 MP &amp; Phụ 20 MP, 8 MP</p>
-                        <p><strong><i class="fas fa-microchip"></i> CPU: </strong>Kirin 980 8 nhân</p>
-                        <p><strong><i class="fas fa-microchip"></i>GPU: </strong>Mali-G76 MP10</p>
-                        <p><strong><i class="fas fa-hdd"></i> RAM: </strong>6GB</p>
-                        <p><strong><i class="fas fa-hdd"></i> Bộ Nhớ Trong: </strong>128GB</p>
-                        <p><strong><i class="fas fa-battery-full"></i> Dung Lượng PIN: </strong>4200 mAh, có sạc nhanh</p>
-                      </div>
-                    </div>
-                  </div>
-                </a>
-              </div>
-            </div>
-            <div class="col-md-2 col-md-20">
-              <div class="item-product">
-                <a href="product/1.html" title="IPhone XS Max">
-                  <div class="row">
-                    <div class="col-md-12 col-sm-12 col-xs-12">
-                      <div class="image-product" style="background-image: url('storage/images/products/1577096095_xBFIEoij_iphone-xs-max.jpg');padding-top: 100%;">
-                        
-                      </div>
-                      <div class="content-product">
-                        <h3 class="title">IPhone XS Max</h3>
-                        <div class="start-vote">
-                          <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
-                        </div>
-                        <div class="price">
-                          <strong>33.990.000₫</strong>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="col-md-12 col-sm-12 col-xs-12 animate">
-                      <div class="product-details">
-                        <p><strong><i class="fas fa-tv"></i> Màn Hình: </strong>OLED, 6.5&quot;, Super Retina</p>
-                        <p><strong><i class="fas fa-camera-retro"></i> Camera Trước: </strong>7 MP</p>
-                        <p><strong><i class="fas fa-camera-retro"></i> Camera sau: </strong>Chính 12 MP &amp; Phụ 12 MP</p>
-                        <p><strong><i class="fas fa-microchip"></i> CPU: </strong>Apple A12 Bionic 6 nhân</p>
-                        <p><strong><i class="fas fa-microchip"></i>GPU: </strong>Apple GPU 4 nhân</p>
-                        <p><strong><i class="fas fa-hdd"></i> RAM: </strong>4GB</p>
-                        <p><strong><i class="fas fa-hdd"></i> Bộ Nhớ Trong: </strong>256GB</p>
-                        <p><strong><i class="fas fa-battery-full"></i> Dung Lượng PIN: </strong>3174 mAh, có sạc nhanh</p>
-                      </div>
-                    </div>
-                  </div>
-                </a>
-              </div>
-            </div>
+            @endforeach
+         
+         
           </div>
         </div>
         <div class="section-footer text-center">

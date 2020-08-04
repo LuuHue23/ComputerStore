@@ -1,5 +1,4 @@
-@media screen and (min-width: 1366px) {
-  ::-webkit-scrollbar {
+@media screen and (min-width: 1366px) {::-webkit-scrollbar {
     display: none;
   }
 }
@@ -820,6 +819,7 @@ body {
   font-size: 14px;
   margin-bottom: 5px;
 }
+
 .section-favorite-products .item-product .content-product .price,
 .section-products .item-product .content-product .price {
   font-size: 14px;
@@ -967,6 +967,8 @@ body {
   text-align: center;
   line-height: 1.1;
 }
+
+
 .site-about .section-about .online_support .or span {
   display: inline-block;
   background: #fff;
@@ -975,6 +977,7 @@ body {
   font-size: 13px;
   line-height: 16px;
 }
+
 .site-about .section-about .online_support .or:after {
     display: block;
     content: "";
@@ -1863,6 +1866,10 @@ body {
 .section-product .section-infomation .image-product img {
   height: 100%;
 }
+
+
+
+
 /*Responsive*/
 @media only screen and (max-width: 1366px){
   .header .main-menu .menu-item .dropdown-menu {

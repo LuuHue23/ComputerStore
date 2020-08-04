@@ -19,15 +19,18 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', 'Customer\CustomerController@index')->name('index');
 Route::get('about','Customer\CustomerController@about')->name('about');
-
-
 Route::group(['prefix'=>'Customer'],function()
 {
 	include 'account.php';
-	Route::get('pro_detail','Customer\ProductController@product_detail')->name('pro_detail');
-
-	
+	Route::get('pro_detail/{slug}','Customer\ProductController@product_detail')->name('pro_detail');
+	//lọc theo danh mục
+	Route::get('pro_cate/{slug}','Customer\ProductController@product_cate')->name('pro_cate');
+	// tìm kiếm
+	Route::get('pro_search','Customer\ProductController@search')->name('pro_search');
+	include 'cart.php';
 });
+// Giỏ hàng
+
 
 Route::group(['prefix'=>'Admin'],function()
 {
@@ -39,7 +42,6 @@ Route::group(['prefix'=>'Admin'],function()
 	Route::get('list','Admin\AccountController@list')->name('list');
 	Route::get('edit_account/{id}','Admin\AccountController@edit')->name('edit_account');
 	Route::post('edit_account/{id}','Admin\AccountController@post_edit')->name('edit_account');
-
 	Route::get('delete_account/{id}','Admin\AccountController@delete')->name('delete_account');
 	include 'product.php';
 	include 'category.php';

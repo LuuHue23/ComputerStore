@@ -73,17 +73,19 @@ $(document).ready(function(){
     var qty = $(this).attr('data-qty');
     $('#qty').attr('max', qty);
   });
+
   $('button.add_to_cart').click(function() {
-    var product_id = $('.color-product .color-inner.active').attr('product-id');
-    var qty = $('.form-payment input.qty').val();
+    // var product_id = $('.color-product .color-inner.active').attr('product-id');
+    var product_id = $('.color-product .color-inner.active').attr('data-id');
+    var qty = $('.form-payment input .qty').val();
     var data = {
       id: product_id,
       qty: qty
     };
-    var url = $(this).attr('data-url');
+    var url = $(this).attr('add-cart'+$(this).data("id"));
     $.ajax({
       url: url,
-      type: 'POST',
+      type: 'GET',
       data: data,
       dataType: 'JSON',
       success: function(data) {
@@ -91,17 +93,18 @@ $(document).ready(function(){
         $('.mini-cart .top-cart-content').append(htmlCart(data.response, data.url));
         $('.support-cart .count_item_pr').empty();
         $('.support-cart .count_item_pr').append(data.response.totalQty);
+
         Swal.fire({
           title: 'Thành Công',
-          text: data.msg,
+      //    text: data.msg,
           type: 'success'
         })
       },
       error: function(data) {
         var errors = data.responseJSON;
         Swal.fire({
-          title: 'Thất bại',
-          text: errors.msg,
+          title: 'Thất bại lần 123',
+         // text: errors.msg,
           type: 'error'
         })
       }
@@ -109,6 +112,7 @@ $(document).ready(function(){
   });
 
 });
+
 
 function displayGallery(key) {
   var slider = $('#imageGallery-' + key).lightSlider({
@@ -156,12 +160,21 @@ function plusInput() {
   var result = document.getElementById('qty');
   var qty = parseInt(result.value);
   var max = parseInt(result.max);
-  if(!isNaN(qty) & qty < max)
+  if(!isNaN(qty) || qty < max) 
     result.value++;
   if(result.value > 0)
     $('.form-payment .row>div>button').prop('disabled', false);
   return false;
 }
+
+function getInput()
+{
+  var quantity= getElementById('qty').value();
+  alert(quantity);
+}
+
+
+
 $(document).ready(function(){
   $('.form-payment button[type="submit"]').click(function () {
     var qty = $('#qty').val();
@@ -172,5 +185,7 @@ $(document).ready(function(){
     $('.form-payment>form').append(input_1);
     $('.form-payment>form').append(input_2);
     $('.form-payment>form').append(input_3);
+
   });
 });
+
